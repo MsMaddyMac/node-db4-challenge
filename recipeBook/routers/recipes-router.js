@@ -2,6 +2,8 @@ const express = require('express');
 
 const Recipes = require('../models/recipes-model');
 
+const { validateRecipeId } = require('../../validators/validators');
+
 const router = express.Router();
 
 // Endpoint for GET request to retrieve all recipes in db
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
 });
 
 // Endpoint for GET request which retrieves a list of all ingredients and quantities for a single recipe
-router.get('/:id/shoppingList', (req, res) => {
+router.get('/:id/shoppingList', validateRecipeId, (req, res) => {
     const id = req.params.id;
 
     Recipes.getShoppingList(id)
@@ -35,7 +37,7 @@ router.get('/:id/shoppingList', (req, res) => {
 });
 
 // Endpoint for GET request which retrieves step by step instructions for a recipe
-router.get('/:id/instructions', (req, res) => {
+router.get('/:id/instructions', validateRecipeId, (req, res) => {
     const id = req.params.id;
 
     Recipes.getInstructions(id)
