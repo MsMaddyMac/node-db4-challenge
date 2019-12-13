@@ -34,4 +34,18 @@ router.get('/:id/shoppingList', (req, res) => {
     });
 });
 
+// Endpoint for GET request which retrieves step by step instructions for a recipe
+router.get('/:id/instructions', (req, res) => {
+    const id = req.params.id;
+
+    Recipes.getInstructions(id)
+    .then(steps => {
+        res.status(200).json(steps);
+    })
+    .catch(err => {
+        console.log('Error getting instructions.', err);
+        res.status(500).json({ error: 'Error retrieving instructions.' });
+    });
+});
+
 module.exports = router;
