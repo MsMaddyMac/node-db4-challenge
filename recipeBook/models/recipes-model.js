@@ -1,7 +1,8 @@
 const db = require('../../data/dbConfig');
 
 module.exports = {
-    getRecipes
+    getRecipes,
+    getShoppingList
 };
 
 function getRecipes(query) {
@@ -14,4 +15,12 @@ function getRecipes(query) {
     .offset(offset);
 
     return rows;
+}
+
+function getShoppingList(recipe_id) {
+    return db('recipes as r')
+        .join('recipe_details as rd', 'r.id', 'rd.recipe_id')
+        .join('ingredients as i', 'rd.ingredient_id', 'i.id')
+        .select('rd.quantity as quantity', 'i.ingredient_name as ingredientName')
+        .where({ recipe_id: recipe_id });
 }

@@ -9,7 +9,7 @@ server.get('/', (req, res) => {
     res.send("<h2>And so it begins...<h2>");
 });
 
-// custome middleware
+// custom middleware
 function logger(req, res, next) {
     console.log(`[${new Date().toISOString()}] ${req.method} to ${req.originalUrl}`)
 
